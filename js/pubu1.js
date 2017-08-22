@@ -94,30 +94,25 @@ getMore = () => {
 
 function putDate(){
   var xhr = ajaxContent();
-
   xhr.onreadystatechange = function(){
-
 
     if(xhr.readyState == 4 && xhr.status == 200) {
       var res = JSON.parse(xhr.responseText);
       var oparent = document.getElementById('main');
-      var narr = JSON.parse(res.data);					//将数据转成对象
-      var len =narr.length;
-      for (var i = 0; i < len; i++){
-        var url = narr[i].src;
-        var str ='<div class="pic"><img src="imgp/'+url+'"></div>';
-        var mdiv = document.createElement('div');
-        mdiv.setAttribute('class','box')
-        mdiv.innerHTML = str;
-        console.log(mdiv);
-        oparent.appendChild(mdiv);
-        waterfall('main','box');			//请求一次做一次定位
-        loading = false;
-      }
+      [...res].map ((item,index) => {
+          var url = item.src;
+          var str ='<div class="pic"><img src="imgp/'+url+'"></div>';
+          var mdiv = document.createElement('div');
+          mdiv.setAttribute('class','box')
+          mdiv.innerHTML = str;
+          oparent.appendChild(mdiv);
+          waterfall('main','box');			//请求一次做一次定位
+          loading = false;
+      })
     }
 
   }
-  xhr.open('get','./php/pubu.php',true);
+  xhr.open('get','../config/data.js',true);
 
   xhr.send();
 
