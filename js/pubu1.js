@@ -23,6 +23,7 @@ window.onload = function () {
     }
   }
 
+  waterfall('main','box');
 
 }
 
